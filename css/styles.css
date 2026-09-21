@@ -73,8 +73,8 @@ body{background:var(--paper);color:var(--ink);font-family:var(--font-b);font-siz
 .nav-mobile-cta{margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--rule)}
 
 /* ── HERO ───────────────────────────────────────────────────── */
-#hero{padding-block:clamp(3rem,7vw,5.5rem) clamp(2.5rem,6vw,5rem);overflow:hidden}
-.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,4vw,4.5rem);align-items:center}
+#hero{padding-block:clamp(2rem,5vw,4rem);overflow:visible}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,4vw,4rem);align-items:center;min-height:0}
 .hero-eyebrow{font-family:var(--font-h);font-size:.72rem;font-weight:500;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;margin-bottom:1rem}
 .hero-title{font-family:var(--font-h);font-size:var(--s5);font-weight:700;line-height:1.07;color:var(--ink);margin-bottom:.9rem}
 .hero-subtitle{font-family:var(--font-b);font-size:var(--s1);font-style:italic;color:var(--muted);line-height:1.5;margin-bottom:1.4rem}
@@ -84,26 +84,43 @@ body{background:var(--paper);color:var(--ink);font-family:var(--font-b);font-siz
 .hero-meta{font-family:var(--font-h);font-size:.75rem;color:var(--muted);letter-spacing:.04em}
 
 /* ── BOOK MOCKUP ────────────────────────────────────────────── */
-/* 3D mockup image — natural depth already in artwork */
-.hero-book-wrap{display:flex;justify-content:center;align-items:center;padding:1.5rem 1rem}
-.book-stage{position:relative;width:min(400px,95%)}
+/* 3D mockup — full silhouette always visible, no cropping */
+.hero-book-wrap{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:1rem;
+}
+.book-stage{
+  position:relative;
+  /* Constrain width so the 3:2 height stays within viewport at all target sizes.
+     1366×768: 38vw = 519px → capped at 320px → book height = 480px → fits in ~572px available ✓
+     1440×900: 38vw = 547px → capped at 360px → book height = 540px → fits in ~704px available ✓
+     1920×1080: capped at 400px → book height = 600px → fits in ~884px available ✓ */
+  width:min(400px, 38vw);
+  /* Also apply a max-height via the image so book never overruns */
+}
 .book-mockup-frame{
   position:relative;
-  filter:drop-shadow(0 24px 48px rgba(26,26,26,.22)) drop-shadow(0 4px 12px rgba(26,26,26,.14));
+  filter:drop-shadow(0 20px 40px rgba(26,26,26,.22)) drop-shadow(0 4px 10px rgba(26,26,26,.14));
   transition:filter .35s ease,transform .35s ease;
 }
 .book-mockup-frame:hover{
-  filter:drop-shadow(0 28px 56px rgba(26,26,26,.26)) drop-shadow(0 6px 16px rgba(26,26,26,.16));
+  filter:drop-shadow(0 26px 52px rgba(26,26,26,.26)) drop-shadow(0 6px 14px rgba(26,26,26,.16));
   transform:translateY(-3px);
 }
 .book-mockup-img{
   display:block;
   width:100%;
+  height:auto;           /* preserve natural 2:3 aspect ratio — never crop */
+  /* Belt-and-suspenders: also cap image height so it can never overflow hero */
+  max-height:calc(75vh - 68px); /* 75% of viewport minus nav height */
+  object-fit:contain;
   border-radius:2px;
 }
 @media(prefers-reduced-motion:reduce){
   .book-mockup-frame{transition:none}
-  .book-mockup-frame:hover{transform:none;filter:drop-shadow(0 24px 48px rgba(26,26,26,.22))}
+  .book-mockup-frame:hover{transform:none;filter:drop-shadow(0 20px 40px rgba(26,26,26,.22))}
 }
 
 /* ── TRUST STRIP ────────────────────────────────────────────── */
@@ -250,8 +267,8 @@ body{background:var(--paper);color:var(--ink);font-family:var(--font-b);font-siz
 /* ── RESPONSIVE ─────────────────────────────────────────────── */
 @media(max-width:900px){
   .hero-grid{grid-template-columns:1fr}
-  .hero-book-wrap{order:-1}
-  .book-stage{width:min(300px,70%);margin-inline:auto}
+  .hero-book-wrap{order:1}  /* text first, book below on mobile */
+  .book-stage{width:min(280px,65%);margin-inline:auto}
   .finding-item{grid-template-columns:1fr;gap:.4rem}
   .includes-grid,.purchase-grid,.about-grid{grid-template-columns:1fr}
   .footer-grid{grid-template-columns:1fr 1fr}
@@ -268,7 +285,7 @@ body{background:var(--paper);color:var(--ink);font-family:var(--font-b);font-siz
   .hero-ctas{flex-direction:column;align-items:stretch}
   .hero-ctas .btn{text-align:center}
   .closing-ctas{flex-direction:column;align-items:center}
-  .book-stage{width:min(240px,75%)}
+  .book-stage{width:min(220px,70%)}
 }
 
 /* ── LOGO IMAGE ─────────────────────────────────────────────── */
