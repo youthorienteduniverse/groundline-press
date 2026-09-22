@@ -7,9 +7,9 @@
    ──────────────────────────────────────────────────────────── */
 const CONFIG = {
   SITE_URL:          "https://groundlinepress.com",
-  CHECKOUT_URL:      "PAYHIP_CHECKOUT_URL_HERE",         /* India ₹299  */
-  CHECKOUT_URL_INTL: "PAYHIP_CHECKOUT_URL_INTL_HERE",    /* Intl $5.99  */
-  FREE_CHAPTER_URL:  "FREE_CHAPTER_URL_HERE",
+  CHECKOUT_URL:      "https://payhip.com/b/Xmxb7",
+  CHECKOUT_URL_INTL: "PAYHIP_CHECKOUT_URL_INTL_HERE",
+  FREE_CHAPTER_URL:  "https://payhip.com/b/Xs9ZI",
   CONTACT_EMAIL:     "groundlinepress@gmail.com",
 };
 
